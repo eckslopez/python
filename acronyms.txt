@@ -1,0 +1,18 @@
+FIFO - First In First Out
+BRB - Be Right Back
+LOL - Laugh Out Loud
+TBH - To Be Honest
+WYA - Where You At?
+WTH - What the Heck?
+IDE - Integrated Development Environment
+UX - User eXperience
+TDD - Test Driven Development
+SaaS - Software as a Service
+PaaS - Platform as a Service
+IaaS - Infrastructure as a Service
+JSON - Javascript Object Notation
+LIFO - Last In Last Out
+OOP - Object Oriented Programming
+ML - Machine Learning
+AI - Artificial Intelligence
+WISNIFG - When I Say No I Feel Guilty
