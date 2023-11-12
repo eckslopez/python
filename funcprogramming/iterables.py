@@ -1,19 +1,27 @@
-#expr_tree = ["*","+","-","a","b","c","d"]
-#iterator = iter(expr_tree)
-#print(iterator)
-#print(next(iterator))
-#print(next(iterator))
-#print(next(iterator))
-#print(next(iterator))
-#print(next(iterator))
-#print(next(iterator))
-#print(next(iterator))
+def main():
+    expr_tree = ["*","+","-","a","b","c","d"]
+    iterator = iter(expr_tree)
 
-#iterator = iter(expr_tree)
-#for item in iterator:
-#    print(item)
-"""True if sequence has length 2 to the power of h - 1, otherwise False
-"""
+    print(next(iterator))
+    print(next(iterator))
+    print(next(iterator))
+    print(next(iterator))
+    print(next(iterator))
+    print(next(iterator))
+    print(next(iterator))
+
+    # Iterator is exhausted. It's a single-use, disposable objects.
+    # You have to call it again if you want to use it 
+    # again.
+    iterator = iter(expr_tree)
+    print(next(iterator))
+print(__name__)
+if __name__ == '__main__':
+    main()
+
+############################################################
+
+
 def _is_perfect_length(sequence):
     n = len(sequence)
     return ((n+1) & n == 0) and (n != 0)
