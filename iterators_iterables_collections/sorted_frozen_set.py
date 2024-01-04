@@ -1,4 +1,7 @@
-class SortedFrozenSet:
+from collections.abc import Sequence
+from itertools import chain
+
+class SortedFrozenSet(Sequence):
     def __init__(self, items=None):
         self._items = tuple(sorted(
             set(items) if (items is not None)
@@ -44,3 +47,16 @@ class SortedFrozenSet:
         return hash(
             (type(self), self._items)
         )
+
+    def __add__(self, rhs):
+        if not isinstance(rhs, type(self)):
+            return NotImplemented
+        return SortedFrozenSet(
+            chain(self._items, rhs._items)
+        )
+
+    def __mul__(self, rhs):
+        return self if rhs > 0 else SortedFrozenSet()
+
+    def __rmul__(self, lhs):
+        return self * lhs
