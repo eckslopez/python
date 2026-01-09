@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  python:
+    image: python:3.11-slim
+    container_name: python-practice
+    working_dir: /workspace
+    volumes:
+      - .:/workspace  # Maps current directory (your python repo) to /workspace in container
+    stdin_open: true
+    tty: true
+    command: /bin/bash
