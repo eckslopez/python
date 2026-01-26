@@ -40,23 +40,29 @@
 import sys
 
 def main(file):
-    file = file
-    bad_ids = []
+    invalid_ids = []
     try:
         with open(file, 'r') as file:
-            # Read the file, which is one big long unquoted string
-            file = file.read()
-            # Split the file on the commas which returns a list of 2 items, each
+            file = file.read() # Read the file, which is one big long unquoted string
+            
+            file = (file.split(",")) # Split the file on the commas which returns a list of 2 items, each
             # consisting of single quoted strings, with a hyphen in the middle
-            file = (file.split(","))
-            # Each item in the string represents a range of ids
-            for i in file:
-                ids = i.split('-')
+            
+            for i in file: # Each item in the string represents a range of ids
+                ids = i.split('-', 1) # the start and stop are i[0] and i[1]
+                for r in range(int(ids[0]), int(ids[1]) + 1): # Convert str to int and iterate over the range
+                    r = str(r) # Convert each integer to back to string 
+                    midpoint = len(r) // 2 # Find the midpoint of the string.
+                    first_half = r[:midpoint] # Save the first half of the string
+                    second_half = r[midpoint:] # Save the second half of the string
+                    if first_half == second_half: # Compare the two strings
+                        invalid_ids.append(first_half + second_half) # Append to invalid_ids[] if they're the same
+            invalid_ids = [int(item) for item in invalid_ids] # Convert the whole string list back to an integer list
+            summed = sum(invalid_ids)
+            print(summed)
 
     except FileNotFoundError:
         print(f"Error: The file '{file}' was not found.")
-    
-    return print(range(int(ids[0]), int(ids[1]) + 1))
 
 def test(file):
     ranges = file
