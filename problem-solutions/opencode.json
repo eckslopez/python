@@ -1,0 +1,99 @@
+
+chema": "https://opencode.ai/config.json",
+  "instructions": ["./AGENTS.md"],
+  "model": "bedrock-mantle-oss/openai.gpt-oss-20b",
+  "small_model": "bedrock-mantle-oss/openai.gpt-oss-20b",
+  "default_agent": "quick",
+
+  "provider": {
+    "bedrock-mantle-oss": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Bedrock Mantle OSS",
+      "options": {
+        "baseURL": "https://bedrock-mantle.us-gov-west-1.api.aws/v1",
+        "apiKey": "{env:BEDROCK_API_KEY}"
+      },
+      "models": {
+        "openai.gpt-oss-20b": {
+          "name": "GPT OSS 20B"
+        }
+      }
+    },
+    "bedrock-mantle-openai": {
+      "npm": "@ai-sdk/openai",
+      "name": "Bedrock Mantle OpenAI",
+      "options": {
+        "baseURL": "https://bedrock-mantle.us-gov-west-1.api.aws/openai/v1",
+        "apiKey": "{env:BEDROCK_API_KEY}"
+      },
+      "models": {
+        "openai.gpt-5.4": {
+          "name": "GPT-5.4"
+        }
+      }
+    }
+  },
+
+  "permission": {
+    "edit": "ask",
+    "external_directory": "ask",
+    "bash": {
+      "*": "ask",
+      "pwd": "allow",
+      "ls *": "allow",
+      "rg *": "allow",
+      "cat *": "allow",
+      "sed *": "allow",
+      "head *": "allow",
+      "tail *": "allow",
+      "wc *": "allow",
+      "git status*": "allow",
+      "git diff*": "allow",
+      "git log*": "allow",
+      "git branch*": "allow",
+      "aws *": "deny",
+      "kubectl *": "deny",
+      "helm *": "deny",
+      "git push*": "deny",
+      "git commit*": "deny",
+      "git tag*": "deny",
+      "terraform apply*": "deny",
+      "terraform destroy*": "deny"
+    }
+  },
+
+  "agent": {
+    "quick": {
+      "description": "Fast default agent for routine repo work.",
+      "mode": "primary",
+      "model": "bedrock-mantle-oss/openai.gpt-oss-20b",
+      "steps": 12
+    },
+    "deep": {
+      "description": "Higher-capability agent for hard reasoning and difficult analysis.",
+      "mode": "primary",
+      "model": "bedrock-mantle-openai/openai.gpt-5.4",
+      "steps": 20
+    },
+    "data": {
+      "description": "Structured-data agent for JSON, YAML, Terraform state, logs, and schemas.",
+      "mode": "subagent",
+      "model": "bedrock-mantle-openai/openai.gpt-5.4",
+      "prompt": "Use deterministic tools for structured data. Do not approximate. Validate format first. Do not modify files.",
+      "permission": {
+        "edit": "deny",
+        "bash": "ask"
+      }
+    }
+  },
+
+  "command": {
+    "inspect-json": {
+      "description": "Inspect JSON with deterministic tools",
+      "agent": "data",
+      "subtask": true,
+      "template": "Inspect this JSON file: $ARGUMENTS. Validate it first. Use jq, node, or another deterministic parser. Do not approximate and do not modify the file."
+    }
+  }
+}
+
